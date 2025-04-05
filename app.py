@@ -35,14 +35,6 @@ def add_todo():
     return render_template("index.html" , allTodo=allTodo)
 
 
-@app.route("/delete/<int:sno>")
-def delete(sno):
-    todo = Todo.query.filter_by(sno=sno).first()
-    db.session.delete(todo)
-    db.session.commit()
-    return redirect("/")
-    # return render_template("show.html", allTodo=allTodo)
-    
 @app.route("/update/<int:sno>",methods=['GET', 'POST'])
 def update(sno):
     if request.method == "POST":
@@ -57,6 +49,17 @@ def update(sno):
         
     todo = Todo.query.filter_by(sno=sno).first()
     return render_template("update.html" , todo=todo)
+
+
+@app.route("/delete/<int:sno>")
+def delete(sno):
+    todo = Todo.query.filter_by(sno=sno).first()
+    db.session.delete(todo)
+    db.session.commit()
+    return redirect("/")
+    # return render_template("show.html", allTodo=allTodo)
+    
+
 
 if __name__ == "__main__":
     app.run(debug=True , port=8000)
